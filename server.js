@@ -7,6 +7,31 @@ var bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//Discord
+const Discord = require('discord.js');
+const bot = new Discord.Client();
+
+bot.on("ready", () => {
+  console.log("Bot started");
+});
+
+bot.on("message", (message) => {
+  //Commands
+  if (message.substring(0, 1)=="!"){
+    let str = message.substring(1, message.length);
+    let args = message.split(' ');
+    let cmd = args[0];
+    args.splice(0, 1);
+    
+    //Commands
+    switch (cmd){
+      case "hi":
+        
+      break;
+    }
+  }
+});
+
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
