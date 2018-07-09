@@ -21,20 +21,23 @@ bot.on("message", (message) => {
   //Commands
   if (msg.substring(0, 1)=="!"){
     let str = msg.substring(1, msg.length);
-    let args = msg.split(' ');
+    let args = str.split(' ');
     let cmd = args[0];
     args.splice(0, 1);
     
     //Commands
     switch (cmd){
       case "hi":
-        message.reply("hi");
+        //message.channel.send("hi");
       break;
     }
   }
+  
+  //Other
+  //if (msg=="lol") message.channel.send("loool");
 });
 
-bot.login("token");
+bot.login(process.env.TOKEN);
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
