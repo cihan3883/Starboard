@@ -34,7 +34,7 @@ bot.on("message", (message) => {
     }
   }
   //Other
-  else{
+  else if (message.author.id != "465945834517823488"){
     //Replace a word with a random word
     let words = msg.split(' ');
     let indexToReplace = Math.random()*words.length;
