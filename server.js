@@ -28,9 +28,13 @@ bot.on("message", (message) => {
     //Commands
     switch (cmd){
       case "hi":
-        //message.channel.send("hi");
+        message.channel.send("hi");
       break;
     }
+  }
+  //Other
+  else{
+    
   }
   
   //Other
