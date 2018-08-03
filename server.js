@@ -6,6 +6,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
+var randomWords = require('random-words');
 
 //Discord
 const Discord = require('discord.js');
@@ -34,7 +35,18 @@ bot.on("message", (message) => {
   }
   //Other
   else{
+    //Replace a word with a random word
+    let words = msg.split(' ');
+    let indexToReplace = Math.random()*words.length;
     
+    words[indexToReplace] = randomWords();
+    let newMsg = words.join(' ');
+    
+    //Send
+    message.channel.send(newMsg);
+    
+    //Delete
+    message.delete(0);
   }
   
   //Other
