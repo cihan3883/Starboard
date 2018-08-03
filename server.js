@@ -35,12 +35,17 @@ bot.on("message", (message) => {
   }
   //Other
   else if (message.author.id != "465945834517823488"){
+    let timesToReplace = 1 + Math.floor(Math.random()*2);
+    
     //Replace a word with a random word
     let words = msg.split(' ');
-    let indexToReplace = Math.random()*words.length;
+    let indexToReplace = Math.floor(Math.random()*words.length);
     
     words[indexToReplace] = randomWords();
     let newMsg = words.join(' ');
+    
+    //Add name
+    newMsg = "**" + message.author.username + "**: " + newMsg;
     
     //Send
     message.channel.send(newMsg);
