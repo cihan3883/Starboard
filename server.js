@@ -13,8 +13,8 @@ var info = JSON.parse(FS.readFileSync("info.json"));
 console.log("Loaded JSON:");
 console.log(info);
 
-var orgMsg = "";
-var orgName = "";
+var orgMsg = info.orgMsg;
+var orgName = info.orgName;
 
 //Discord
 const Discord = require('discord.js');
@@ -95,6 +95,10 @@ bot.on("message", (message) => {
         orgMsg = msg;
         orgName = message.author.username;
         
+        info.orgMsg = orgMsg;
+        info.orgName = orgName;
+        save();
+        
         message.channel.send(name + ": " + newMsg);
         message.channel.send("One or two words have been replaced. Guess what they originally said!");
 
@@ -102,17 +106,17 @@ bot.on("message", (message) => {
         message.delete(0);
       }
       //Guessing
-      else if (1){
-        //Repeat
-        if (msg.toLowerCase()=="repeat"){
-          message.channel.send("Alright. The text was '" + orgMsg + "'. One or two words were changed. Guess what they originally said!");
-        }
+      else if (message.author.username != orgName){
         //Correct
-        else if (msg.toLowerCase() == orgMsg.toLowerCase()){
+        if (msg.toLowerCase() == orgMsg.toLowerCase()){
           message.channel.send(name + ", that's right! You win.");
           orgMsg = "";
           orgName = "";
           message.channel.send("Now someone say something so that I can mess it up!");
+        }
+        //Repeat
+        else if (msg.toLowerCase()=="repeat"){
+          message.channel.send("Alright. The text was '" + orgMsg + "'. One or two words were changed. Guess what they originally said!");
         }
         //Wrong
         else{
@@ -147,5 +151,5 @@ var listener = app.listen(process.env.PORT, function () {
 
 //Save
 function save(){
-  FS.writeFile("info.json", info);
+  FS.writeFile("info.json", JSON.stringify(info));
 }
