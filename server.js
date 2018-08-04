@@ -72,7 +72,7 @@ bot.on("message", (message) => {
     }
     //guess-what
     else if (channel=="guess-what"){
-      let timesToReplace = 1 + Math.floor(Math.random()*2);
+      let timesToReplace = 1 + Math.floor(Math.min(msg.length/20, 1));
       let words = msg.split(' ');
       let newMsg;
 
@@ -97,9 +97,12 @@ bot.on("message", (message) => {
         
         message.channel.send(name + ": " + newMsg);
         message.channel.send("One or two words have been replaced. Guess what they originally said!");
+
+        //Delete
+        message.delete(0);
       }
       //Guessing
-      else{
+      else if (message.author.username != orgName){
         //Correct
         if (msg.toLowerCase() == orgMsg.toLowerCase()){
           message.channel.send(name + ", that's right! You win.");
@@ -107,13 +110,12 @@ bot.on("message", (message) => {
           orgName = "";
           message.channel.send("Now someone say something so that I can mess it up!");
         }
+        //Wrong
         else{
-          
+          let msgs = ["Nope, that's not what ", "Not at all what ", "Do you really think *that's* what ", "Nope nope nope, not what "];
+          message.channel.send(msgs[Math.floor(Math.random()*msgs.length)] + orgName + " said!");
         }
       }
-
-      //Delete
-      message.delete(0);
     }
   }
   
