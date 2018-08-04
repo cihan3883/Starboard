@@ -7,6 +7,9 @@ var bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 var randomWords = require('random-words');
+var FS = require('file-system');
+
+var info = FS.readFile(
 
 //Discord
 const Discord = require('discord.js');
@@ -35,28 +38,58 @@ bot.on("message", (message) => {
   }
   //Other
   else if (message.author.id != "465945834517823488"){
-    let timesToReplace = 1 + Math.floor(Math.random()*2);
-    let words = msg.split(' ');
-    let newMsg;
+    let channel = message.channel.name;
     
-    for(let i=0; i<timesToReplace; i++){
-      //Replace a word with a random word
-      let indexToReplace = Math.floor(Math.random()*words.length);
+    //crazy-talk
+    if (channel=="crazy-talk"){
+      let timesToReplace = 1 + Math.floor(Math.random()*2);
+      let words = msg.split(' ');
+      let newMsg;
 
-      words[indexToReplace] = randomWords();
+      for(let i=0; i<timesToReplace; i++){
+        //Replace a word with a random word
+        let indexToReplace = Math.floor(Math.random()*words.length);
+
+        words[indexToReplace] = randomWords();
+      }
+
+      //To string
+      newMsg = words.join(' ');
+
+      //Add name
+      newMsg = "**" + message.author.username + "**: " + newMsg;
+
+      //Send
+      message.channel.send(newMsg);
+
+      //Delete
+      message.delete(0);
     }
-    
-    //To string
-    newMsg = words.join(' ');
+    //guess-what
+    else if (channel=="guess-what"){
+      let timesToReplace = 1 + Math.floor(Math.random()*2);
+      let words = msg.split(' ');
+      let newMsg;
 
-    //Add name
-    newMsg = "**" + message.author.username + "**: " + newMsg;
-    
-    //Send
-    message.channel.send(newMsg);
-    
-    //Delete
-    message.delete(0);
+      for(let i=0; i<timesToReplace; i++){
+        //Replace a word with a random word
+        let indexToReplace = Math.floor(Math.random()*words.length);
+
+        words[indexToReplace] = randomWords();
+      }
+
+      //To string
+      newMsg = words.join(' ');
+
+      //Add name
+      newMsg = "**" + message.author.username + "**: " + newMsg;
+
+      //Send
+      message.channel.send(newMsg);
+
+      //Delete
+      message.delete(0);
+    }
   }
   
   //Other
