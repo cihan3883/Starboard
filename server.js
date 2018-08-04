@@ -15,6 +15,7 @@ console.log(info);
 
 var orgMsg = info.orgMsg;
 var orgName = info.orgName;
+var newMsgO = info.newMsg;
 
 //Discord
 const Discord = require('discord.js');
@@ -94,9 +95,11 @@ bot.on("message", (message) => {
       if (orgMsg==""){
         orgMsg = msg;
         orgName = message.author.username;
+        newMsgO = newMsg;
         
         info.orgMsg = orgMsg;
         info.orgName = orgName;
+        info.newMsg = newMsgO;
         save();
         
         message.channel.send(name + ": " + newMsg);
@@ -116,7 +119,7 @@ bot.on("message", (message) => {
         }
         //Repeat
         else if (msg.toLowerCase()=="repeat"){
-          message.channel.send("Alright. The text was '" + orgMsg + "'. One or two words were changed. Guess what they originally said!");
+          message.channel.send("Alright. The text was '" + newMsgO + "'. One or two words were changed. Guess what they originally said!");
         }
         //Wrong
         else{
