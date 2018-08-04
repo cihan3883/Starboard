@@ -102,9 +102,13 @@ bot.on("message", (message) => {
         message.delete(0);
       }
       //Guessing
-      else if (message.author.username != orgName){
+      else if (1){
+        //Repeat
+        if (msg.toLowerCase()=="repeat"){
+          message.channel.send("Alright. The text was '" + orgMsg + "'. One or two words were changed. Guess what they originally said!");
+        }
         //Correct
-        if (msg.toLowerCase() == orgMsg.toLowerCase()){
+        else if (msg.toLowerCase() == orgMsg.toLowerCase()){
           message.channel.send(name + ", that's right! You win.");
           orgMsg = "";
           orgName = "";
