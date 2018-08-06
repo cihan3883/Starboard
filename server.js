@@ -71,6 +71,31 @@ bot.on("message", (message) => {
       //Delete
       message.delete(0);
     }
+    //learn-grammar
+    if (channel=="learn-grammar"){
+      let timesToReplace = 1 + Math.floor(Math.random()*2);
+      let words = msg.split(' ');
+      let newMsg;
+
+      for(let i=0; i<timesToReplace; i++){
+        //Replace a word with a random word
+        let indexToReplace = Math.floor(Math.random()*words.length);
+
+        words[indexToReplace] = randomWords();
+      }
+
+      //To string
+      newMsg = words.join(' ');
+
+      //Add name
+      newMsg = "**" + message.author.username + "**: " + newMsg;
+
+      //Send
+      message.channel.send(newMsg);
+
+      //Delete
+      message.delete(0);
+    }
     //guess-what
     else if (channel=="guess-what"){
       let timesToReplace = 1// + Math.floor(Math.min(msg.length/20, 1));
