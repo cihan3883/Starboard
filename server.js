@@ -73,7 +73,7 @@ bot.on("message", (message) => {
     }
     //guess-what
     else if (channel=="guess-what"){
-      let timesToReplace = 1 + Math.floor(Math.min(msg.length/20, 1));
+      let timesToReplace = 1// + Math.floor(Math.min(msg.length/20, 1));
       let words = msg.split(' ');
       let newMsg;
 
@@ -103,10 +103,19 @@ bot.on("message", (message) => {
         save();
         
         message.channel.send(name + ": " + newMsg);
-        message.channel.send("One or two words have been replaced. Guess what they originally said!");
+        message.channel.send("One word has been replaced. Guess what they originally said!");
 
         //Delete
         message.delete(0);
+      }
+      //Repeat
+      else if (msg.toLowerCase()=="repeat"){
+        message.channel.send("Alright. The text was '" + newMsgO + "'. One or two words were changed. Guess what they originally said!");
+      }
+      //End
+      else if (msg.toLowerCase()=="end" && message.author.username == orgName){
+        message.channel.send("Ongoing question ended.");
+        message.channel.send("Now someone say something so that I can mess it up!");
       }
       //Guessing
       else if (message.author.username != orgName){
@@ -116,10 +125,6 @@ bot.on("message", (message) => {
           orgMsg = "";
           orgName = "";
           message.channel.send("Now someone say something so that I can mess it up!");
-        }
-        //Repeat
-        else if (msg.toLowerCase()=="repeat"){
-          message.channel.send("Alright. The text was '" + newMsgO + "'. One or two words were changed. Guess what they originally said!");
         }
         //Wrong
         else{
