@@ -15,7 +15,7 @@ console.log(info);
 
 var orgMsg = info.orgMsg;
 var orgName = info.orgName;
-var newMsgO = info.newMsg;
+var newMsg0 = info.newMsg;
 
 //Discord
 const Discord = require('discord.js');
@@ -95,11 +95,11 @@ bot.on("message", (message) => {
       if (orgMsg==""){
         orgMsg = msg;
         orgName = message.author.username;
-        newMsgO = newMsg;
+        newMsg0 = newMsg;
         
         info.orgMsg = orgMsg;
         info.orgName = orgName;
-        info.newMsg = newMsgO;
+        info.newMsg = newMsg0;
         save();
         
         message.channel.send(name + ": " + newMsg);
@@ -110,10 +110,18 @@ bot.on("message", (message) => {
       }
       //Repeat
       else if (msg.toLowerCase()=="repeat"){
-        message.channel.send("Alright. The text was '" + newMsgO + "'. One or two words were changed. Guess what they originally said!");
+        message.channel.send("Alright. The text was '" + newMsg0 + "'. One or two words were changed. Guess what they originally said!");
       }
       //End
       else if (msg.toLowerCase()=="end" && message.author.username == orgName){
+        orgMsg = "";
+        orgName = "";
+        newMsg0 = "";
+        info.orgMsg = orgMsg;
+        info.orgName = orgName;
+        info.newMsg = newMsg0;
+        save();
+        
         message.channel.send("Ongoing question ended.");
         message.channel.send("Now someone say something so that I can mess it up!");
       }
@@ -122,13 +130,22 @@ bot.on("message", (message) => {
         //Correct
         if (msg.toLowerCase() == orgMsg.toLowerCase()){
           message.channel.send(name + ", that's right! You win.");
+          
           orgMsg = "";
           orgName = "";
+          newMsg0 = "";
+          info.orgMsg = orgMsg;
+          info.orgName = orgName;
+          info.newMsg = newMsg0;
+          save();
+          
           message.channel.send("Now someone say something so that I can mess it up!");
         }
         //Wrong
         else{
-          let msgs = ["Nope, that's not what ", "Not at all what ", "Do you really think *that's* what ", "Nope nope nope, not what "];
+          let msgs = ["Nope, that's not what ", "Not at all what ", "Do you really think *that's* what ", "Nope nope nope, not what "
+                     , "There is no way that's what ", "I don't think that's what ", "You know that is not what ", "Not what "
+                     , "That's nothing "];
           message.channel.send(msgs[Math.floor(Math.random()*msgs.length)] + orgName + " said!");
         }
       }
