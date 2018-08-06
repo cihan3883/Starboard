@@ -48,40 +48,29 @@ bot.on("message", (message) => {
     
     //crazy-talk
     if (channel=="crazy-talk"){
-      let timesToReplace = 1 + Math.floor(Math.random()*2);
       let words = msg.split(' ');
       let newMsg;
+      let actions = ["REPLACE", "CAPITALIZE", "ADD_PHRASE"];
+      let actionCount = Math.floor(Math.random()*actions.length);
+      
+      for(let a=0; a<actionCount; a++){
+        let action = choose(actions);
+        
+        switch(action){
+          case "REPLACE":
+            let timesToReplace = 1 + Math.floor(Math.random()*2);
+            for(let i=0; i<timesToReplace; i++){
+              //Replace a word with a random word
+              let indexToReplace = Math.floor(Math.random()*words.length);
 
-      for(let i=0; i<timesToReplace; i++){
-        //Replace a word with a random word
-        let indexToReplace = Math.floor(Math.random()*words.length);
-
-        words[indexToReplace] = randomWords();
-      }
-
-      //To string
-      newMsg = words.join(' ');
-
-      //Add name
-      newMsg = "**" + message.author.username + "**: " + newMsg;
-
-      //Send
-      message.channel.send(newMsg);
-
-      //Delete
-      message.delete(0);
-    }
-    //learn-grammar
-    if (channel=="learn-grammar"){
-      let timesToReplace = 1 + Math.floor(Math.random()*2);
-      let words = msg.split(' ');
-      let newMsg;
-
-      for(let i=0; i<timesToReplace; i++){
-        //Replace a word with a random word
-        let indexToReplace = Math.floor(Math.random()*words.length);
-
-        words[indexToReplace] = randomWords();
+              words[indexToReplace] = randomWords();
+            }
+          break;
+            
+          case "CAPITALIZE":
+            
+          break;
+        }
       }
 
       //To string
@@ -202,4 +191,9 @@ var listener = app.listen(process.env.PORT, function () {
 //Save
 function save(){
   FS.writeFile("info.json", JSON.stringify(info));
+}
+
+//Choose
+function choose(arr){
+  return Math.floor(Math.random()*arr.length);
 }
