@@ -51,14 +51,14 @@ bot.on("message", (message) => {
       let words = msg.split(' ');
       let newMsg;
       let actions = ["REPLACE", "CAPITALIZE", "ADD_PHRASE"];
-      let actionCount = Math.floor(Math.random()*actions.length);
+      let actionCount = 1+Math.floor(Math.random()*actions.length);
       
       for(let a=0; a<actionCount; a++){
         let action = choose(actions);
         
         switch(action){
           case "REPLACE":
-            let timesToReplace = 1 + Math.floor(Math.random()*2);
+            let timesToReplace = 1// + Math.floor(Math.random()*2);
             for(let i=0; i<timesToReplace; i++){
               //Replace a word with a random word
               let indexToReplace = Math.floor(Math.random()*words.length);
@@ -76,10 +76,10 @@ bot.on("message", (message) => {
           case "ADD_PHRASE":
             let indexToAppend = Math.floor(Math.random()*words.length);
             
-            let phrase = ["come on", "why the hell", "seriously?", "no way", "fantastic", "myself", "you suck", "noob",
+            let phrase = choose(["come on", "why the hell", "seriously?", "no way", "fantastic", "myself", "you suck", "noob",
                          "I tried", "someone died", "I'm broke", "I love cats", "I love dogs", "I love fish", "internet has ruined our generation",
                          "fake news", "FAKE NEWS", "OMG", "LOL", "lol", "xD", "xd", "XD", "looooooool", "wow", "WOW", "really?",
-                         "that's bad", "good work", "I did that", "mission accomplished"];
+                         "that's bad", "good work", "I did that", "mission accomplished", "20 times", "twice a day", "yesterday only", "on my own"]);
             
             let arr = phrase.split(" ");
             
@@ -212,5 +212,5 @@ function save(){
 
 //Choose
 function choose(arr){
-  return Math.floor(Math.random()*arr.length);
+  return arr[Math.floor(Math.random()*arr.length)];
 }
