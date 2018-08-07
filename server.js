@@ -68,7 +68,24 @@ bot.on("message", (message) => {
           break;
             
           case "CAPITALIZE":
+            let indexToReplace = Math.floor(Math.random()*words.length);
             
+            words[indexToReplace] = words[indexToReplace].toUpperCase();
+          break;
+            
+          case "ADD_PHRASE":
+            let indexToAppend = Math.floor(Math.random()*words.length);
+            
+            let phrase = ["come on", "why the hell", "seriously?", "no way", "fantastic", "myself", "you suck", "noob",
+                         "I tried", "someone died", "I'm broke", "I love cats", "I love dogs", "I love fish", "internet has ruined our generation",
+                         "fake news", "FAKE NEWS", "OMG", "LOL", "lol", "xD", "xd", "XD", "looooooool", "wow", "WOW", "really?",
+                         "that's bad", "good work", "I did that", "mission accomplished"];
+            
+            let arr = phrase.split(" ");
+            
+            for(let i=0; i<arr.length; i++){
+              words.splice(indexToAppend+1+i, 0, arr[i]);
+            }
           break;
         }
       }
