@@ -51,7 +51,7 @@ bot.on("message", (message) => {
       let words = msg.split(' ');
       let newMsg;
       let actions = ["REPLACE", "CAPITALIZE", "ADD_PHRASE"];
-      let actionCount = 1+Math.floor(Math.random()*actions.length);
+      let actionCount = 1+Math.floor(Math.random()*3);
       
       for(let a=0; a<actionCount; a++){
         let action = choose(actions);
@@ -79,7 +79,8 @@ bot.on("message", (message) => {
             let phrase = choose(["come on", "why the hell", "seriously?", "no way", "fantastic", "myself", "you suck", "noob",
                          "I tried", "someone died", "I'm broke", "I love cats", "I love dogs", "I love fish", "internet has ruined our generation",
                          "fake news", "FAKE NEWS", "OMG", "LOL", "lol", "xD", "xd", "XD", "looooooool", "wow", "WOW", "really?",
-                         "that's bad", "good work", "I did that", "mission accomplished", "20 times", "twice a day", "yesterday only", "on my own"]);
+                         "that's bad", "good work", "I did that", "mission accomplished", "20 times", "twice a day", "yesterday only", "on my own",
+                         "...umm", "umm...", "AAAAAAAAAAAAA", "you"]);
             
             let arr = phrase.split(" ");
             
