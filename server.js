@@ -80,7 +80,9 @@ bot.on("message", (message) => {
                          "I tried", "someone died", "I'm broke", "I love cats", "I love dogs", "I love fish", "internet has ruined our generation",
                          "fake news", "FAKE NEWS", "OMG", "LOL", "lol", "xD", "xd", "XD", "looooooool", "wow", "WOW", "really?",
                          "that's bad", "good work", "I did that", "mission accomplished", "20 times", "twice a day", "yesterday only", "on my own",
-                         "...umm", "umm...", "AAAAAAAAAAAAA", "you", ":joy:", ":sob:"]);
+                         "...umm", "umm...", "AAAAAAAAAAAAA", "you", ":joy:", ":sob:", "I am a communist", "I voted for Trump", "MAGA!",
+                         "'Make America Great Again'", "without", "internally", "sleep", "why dude", "haha", "in reality", "....", " -- *silence* -- ",
+                         "*shoots you*", "ban me", "plx", "kthxbai", "bye", "oooooooooooooo"]);
             
             let arr = phrase.split(" ");
             
