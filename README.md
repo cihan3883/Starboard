@@ -1,7 +1,17 @@
 Discord.js Bot Template
 =================
 
+**~ Creating Your Glitch Bot ~**
+
+----------
+
+Click on `discord-js-bot-template` in the top-left corner of this window, and click "Remix Project".
+
+It should duplicate this template into your account. You can then edit it and create your own bot.
+
 **~ Editing ~**
+
+----------
 
 The bot's code is in `server.js`.
 

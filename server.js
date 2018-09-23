@@ -23,24 +23,26 @@ bot.on("message", (message) => {
   let msg = message.content;
   
   //Commands
-  if (msg.substring(0, 1)=="!"){
+  if (msg.substring(0, 1)=="!"){ //Command prefix, like !command
     let str = msg.substring(1, msg.length);
     let args = str.split(' ');
     let cmd = args[0];
     args.splice(0, 1);
     
     //Commands
-    switch (cmd){
-      case "hi":
+    switch (cmd){ //Commands here
+      case "hi": //Example of a simple command. Use !hi and it says "hi"
         message.channel.send("hi");
       break;
     }
   }
-  //Other
+  //Message replies
   else if (message.author.id != "465945834517823488"){ //Replace this number with your bot's user ID
-    let channel = message.channel.name;
+    let channel = message.channel.name; //Channel name
     
-    
+    if (msg=="hello bot"){ //If someone says "hello bot",
+      message.channel.send("hello hooman"); //say "hello hooman"
+    }
   }
 });
 
@@ -64,7 +66,7 @@ function save(){
   FS.writeFile("info.json", JSON.stringify(info));
 }
 
-//Choose
+//Choose a random item from an array
 function choose(arr){
   return arr[Math.floor(Math.random()*arr.length)];
 }
