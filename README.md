@@ -1,28 +1,33 @@
-Welcome to Glitch
+Discord.js Bot Template
 =================
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
+**~ How to use ~**
 
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
+----------
 
-Find out more [about Glitch](https://glitch.com/about).
+Go here and create a new app: [Discord Apps](https://discordapp.com/developers/applications/)
 
+(Make sure you enable the bot for it)
 
-Your Project
-------------
+Copy its token and paste it in the `.env` file, like this:
 
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
+```TOKEN="YOUR_TOKEN_VALUE" //Quotes are required```
 
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
+----------
 
-This app has a database!
-- this app uses sqlite but you can power your apps with [a number of other storage options](https://glitch.com/storage)
-- `sqlite.db` is created and put into the `.data` folder, a hidden directory whose contents aren’t copied when a project is remixed. you can see the contents of `.data` in the console under "advanced options"
+Copy your bot's Client ID
+
+Replace YOUR_CLIENT_ID with your actual Client ID in this link, to get an invite link for the bot:
+
+https://discordapp.com/oauth2/authorize?&client_id=YOUR_CLIENT_ID&scope=bot&permissions=0
+
+----------
+
+Discord -> Settings -> Appearance -> Enable "Developer Mode"
+
+Right-click on your bot (in Discord) and click "Copy ID"
+
+Paste that line
 
 
 Made by [Fog Creek](https://fogcreek.com/)

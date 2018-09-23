@@ -37,7 +37,7 @@ bot.on("message", (message) => {
     }
   }
   //Other
-  else if (message.author.id != "465945834517823488"){
+  else if (message.author.id != "465945834517823488"){ //Replace this number with your bot's user ID
     let channel = message.channel.name;
     
     
