@@ -29,9 +29,9 @@ Copy its token and paste it in the `.env` file, like this:
 
 ----------
 
-Copy your bot's Client ID
+Copy your bot's Client ID from its Discord Apps page.
 
-Replace YOUR_CLIENT_ID with your actual Client ID in this link, to get an invite link for the bot:
+In the following link, replace YOUR_CLIENT_ID with your actual Client ID, to get an invite link for the bot:
 
 https://discordapp.com/oauth2/authorize?&client_id=YOUR_CLIENT_ID&scope=bot&permissions=0
 
@@ -63,6 +63,17 @@ Add your stuff inside the `info` object and use `save()`.
 
 It will be saved into `info.json` and will be loaded back into the `info` object whenever the bot restarts.
 
+**~ Keeping the bot up ~**
+
+----------
+
+Glitch.com automatically shuts down a bot after 5 minutes. To make it always be up, sign up on [Uptime Robot](https://uptimerobot.com/).
+
+On Glitch, click on "Share" under your bot's name, and copy the **App** link.
+
+On Uptime Robot, add a new monitor, and select `HTTP(s)` as its type. Add a name and paste the app link in the URL text field. Then create the monitor.
+
+It should keep the bot up.
 
 Made by [Matharoo](https://twitter.com/itsmatharoo)
 -------------------
