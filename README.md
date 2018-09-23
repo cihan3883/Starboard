@@ -30,7 +30,7 @@ Right-click on your bot (in Discord) and click "Copy ID"
 Paste that line
 
 
-Made by [Fog Creek](https://fogcreek.com/)
+Made by [Matharoo](https://twitter.com/itsmatharoo)
 -------------------
 
-\ ゜o゜)ノ
+\ (゜o゜)ノ
