@@ -1,6 +1,10 @@
 Discord.js Bot Template
 =================
 
+**~ Editing ~**
+
+The bot's code is in `server.js`.
+
 **~ How to use ~**
 
 ----------
@@ -26,8 +30,28 @@ https://discordapp.com/oauth2/authorize?&client_id=YOUR_CLIENT_ID&scope=bot&perm
 Discord -> Settings -> Appearance -> Enable "Developer Mode"
 
 Right-click on your bot (in Discord) and click "Copy ID"
+.
+Paste that ID in line 40 of `server.js`
 
-Paste that line
+**~ Commands ~**
+
+----------
+
+Under the switch() at line 33 of `server.js`.
+
+**~ Message Replies ~**
+
+----------
+
+Inside the if() block at line 40 of `server.js`.
+
+**~ Saving Data ~**
+
+----------
+
+Add your stuff inside the `info` object and use `save()`.
+
+It will be saved into `info.json` and will be loaded back into the `info` object whenever the bot restarts.
 
 
 Made by [Matharoo](https://twitter.com/itsmatharoo)
