@@ -13,40 +13,37 @@ var info = JSON.parse(FS.readFileSync("info.json"));
 
 //Discord
 const Discord = require('discord.js');
-const bot = new Discord.Client();
+const Client = new Discord.Client();
 
-bot.on("ready", () => {
+Client.on("ready", () => {
   console.log("Bot started");
 });
 
-bot.on("message", (message) => {
+Client.on("message", (message) => {
   let msg = message.content;
+  let channel = message.channel.name;
   
   //Commands
-  if (msg.substring(0, 1)=="!"){ //Command prefix, like !command
-    let str = msg.substring(1, msg.length);
-    let args = str.split(' ');
-    let cmd = args[0];
-    args.splice(0, 1);
+  if (msg.substring(0, 1)=="!") { //Command prefix, like !command
+    let args = msg.slice(1).trim().split(/ +/g);
+    let command = args.shift().toLowerCase();
     
     //Commands
-    switch (cmd){ //Commands here
+    switch (command) { //Commands here
       case "hi": //Example of a simple command. Use !hi and it says "hi"
         message.channel.send("hi");
       break;
     }
   }
   //Message replies
-  else if (message.author.id != "465945834517823488"){ //Replace this number with your bot's user ID
-    let channel = message.channel.name; //Channel name
-    
-    if (msg=="hello bot"){ //If someone says "hello bot",
-      message.channel.send("hello hooman"); //say "hello hooman"
+  else if (message.author.id != "465945834517823488") { //Replace this number with your bot's user ID
+    if (msg=="hello bot") { //If someone says "hello bot",
+      message.channel.send("hello human"); //say "hello human"
     }
   }
 });
 
-bot.login(process.env.TOKEN);
+Client.login(process.env.TOKEN);
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
@@ -62,11 +59,11 @@ var listener = app.listen(process.env.PORT, function () {
 });
 
 //Save
-function save(){
+function save() {
   FS.writeFile("info.json", JSON.stringify(info));
 }
 
 //Choose a random item from an array
-function choose(arr){
+function choose(arr) {
   return arr[Math.floor(Math.random()*arr.length)];
 }
