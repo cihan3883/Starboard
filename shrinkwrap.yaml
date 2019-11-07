@@ -2,7 +2,6 @@ dependencies:
   discord.js: 11.3.2
   express: 4.16.3
   file-system: 2.2.2
-  random-words: 1.1.0
   sqlite3: 4.0.0
   wordpos: 1.1.6
 packages:
@@ -355,10 +354,6 @@ packages:
       node: '>=0.6'
     resolution:
       integrity: sha512-eRzhrN1WSINYCDCbrz796z37LOe3m5tmW7RQf6oBntukAG1nmovJvhnwHHRMAfeoItc1m2Hk02WER2aQ/iqs+A==
-  /random-words/1.1.0:
-    dev: false
-    resolution:
-      integrity: sha512-GyV8PlSmQE08S/RSCjG9Uh0uQaUC7iRpA18PWk9OSnvNCzKQ+B2NxqqN/cYBej4t7dfBWxh10KFBYSiNcg1jlg==
   /range-parser/1.2.0:
     dev: false
     engines:
@@ -531,6 +526,5 @@ specifiers:
   discord.js: ^11.3.2
   express: ^4.16.3
   file-system: ^2.2.2
-  random-words: ^1.1.0
   sqlite3: ^4.0.0
   wordpos: ^1.1.6
