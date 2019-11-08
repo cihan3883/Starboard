@@ -55,7 +55,7 @@ async function checkReaction(reaction, user, starAmount) {
   
   // Message is from a bot
   if (message.author.bot)
-    return message.channel.send(`${user} you can't star bot messages.`);
+    return message.channel.send(`${user} you can't star messages from bots.`);
   // Message is empty
   if (image === '' && message.cleanContent.length < 1)
     return message.channel.send(`${user} you can't star an empty message.`);
