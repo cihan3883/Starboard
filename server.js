@@ -36,6 +36,14 @@ client.on("guildCreate", guild => {
     starboard.send(starterEmbed);
 });
 
+client.on("message", message => {
+    let starboard = message.guild.channels.find(channel => channel.name === config.starboardChannel);   
+    if (message.content == "start") {
+      console.log("start");
+      starboard.send(starterEmbed);
+    }
+});
+
 // Checks the reaction and responds accordingly
 async function checkReaction(reaction, user, starAmount) {
   
