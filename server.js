@@ -8,20 +8,11 @@ const Discord = require('discord.js');
 const client = new Discord.Client({"partials" : ['CHANNEL', 'MESSAGE']});
 
 // Global
-let avatar;
-
-client.users.fetch("411878868274642945").then(user => {
-  avatar = user.displayAvatarURL();
-});
 const starterEmbed = new Discord.MessageEmbed()
   .setColor(config.defaultColour)
-  .setTitle('qweleo's)
-  .setDescription('Some description here')
-  .addField('Regular field title', 'Some value here')
-  .addBlankField()
-  .addField('Inline field title', 'Some value here', true)
-  .addField('Inline field title', 'Some value here', true)
-  .addField('Inline field title', 'Some value here', true)
+  .setTitle('Welcome to the starboard!')
+  .setDescription(`You can react to any message with the ⭐ emoji, and once it has ${config.minimumStars} stars it will be added to the messages in this channel.`)
+  .addField('Source Code', '[view](https://glitch.com/~leo-starboard-bot)')
   .setTimestamp()
 
 client.on("ready", () => {
