@@ -95,13 +95,13 @@ async function checkReaction(reaction, user, starAmount) {
     if (image)
       newEmbed.setImage(image);
     
-    let starMsg = await starboard.fetchMessage(starboardMessage.id);
+    let starMsg = await starboard.messages.fetch(starboardMessage.id);
     await starMsg.edit({ embed:newEmbed });   
   } else {
   // New message
     console.log("new message");
     let starCount = message.reactions.get(reaction.emoji.name).count;
-    if (message.reactions.get(reaction.emoji.name).users.has(message.author.id)) starCount--;
+    //if (message.reactions.get(reaction.emoji.name).users.has(message.author.id)) starCount--;
     
     // Add to starboard if over minimum stars
     if (starCount >= config.minimumStars) {
