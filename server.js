@@ -12,22 +12,28 @@ Client.on("ready", () => {
 });
 
 
-Client.on("MessageReactionAdd", async (reaction, user) => {
+Client.on("messageReactionAdd", async (reaction, user) => {
   let message = reaction.message;
   let image = message.attachments.size > 0 ? await this.extension(message.attachments.array()[0].url) : '';
   
   // Reaction isn't a star
   if (reaction.emoji.name !== '⭐') return;
-  // Reacting to your own message
+  // Message is your own
   if (message.author.id === user.id)
     return message.channel.send(`${user}, you can't star your own messages.`);
   // Message is from a bot
   if (message.author.bot)
     return message.channel.send(`${user}, you can't star bot messages.`);
+  // Message is empty
+  if (image === '' && message.cleanContent.length < 1)
+    return message.channel.send(`${user}, you cannot star an empty message.`);
   
   let starboard = message.guild.channels.find(channel => channel.name === config.starboardChannel);
   let fetchedMessages = await starboard.fetchMessages({ limit: 100 });
   let starboardMessage = fetchedMessages.find(m => m.embeds[0].footer.text.startsWith('⭐') && m.embeds[0].footer.text.endsWith(message.id));
+  
+  console.log("channel: " + starboard);
+  starboard.send("star");
   
   if (starboardMessage !== undefined) {
   // Old message    
@@ -52,19 +58,14 @@ Client.on("MessageReactionAdd", async (reaction, user) => {
     
     // Only add to starboard if over minimum stars
     if (starCount >= config.minimumStars) {
-      let image = message.attachments.size > 0 ? await this.extension(message.attachments.array()[0].url) : '';
-
-      // Check for empty message
-      if (image === '' && message.cleanContent.length < 1)
-        return message.channel.send(`${user}, you cannot star an empty message.`);
-
+      
       // Create embed message
       let newEmbed = new Discord.RichEmbed()
         .setColor(config.defaultColour)
         .setDescription(message.cleanContent)
         .setAuthor(message.author.tag, message.author.displayAvatarURL)
         .setTimestamp(new Date())
-        .setFooter(`⭐ 1 | ${message.id}`)
+        .setFooter(`⭐ ${starCount} | ${message.id}`)
         .setImage(image);
 
       await starboard.send({ newEmbed });
