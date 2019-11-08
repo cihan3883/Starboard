@@ -1,5 +1,10 @@
 // Init project
+var express = require('express');
+var bodyParser = require('body-parser');
+var app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 const FS = require('file-system');
+
 let config = JSON.parse(FS.readFileSync("config.json"));
 let data = JSON.parse(FS.readFileSync("data.json"));
 
@@ -13,8 +18,11 @@ Client.on("ready", () => {
 
 
 Client.on("messageReactionAdd", async (reaction, user) => {
+  console.log("reacted");
   let message = reaction.message;
   let image = message.attachments.size > 0 ? await this.extension(message.attachments.array()[0].url) : '';
+  
+  console.log("passed image");
   
   // Reaction isn't a star
   if (reaction.emoji.name !== '⭐') return;
@@ -83,6 +91,19 @@ function extension(attachment) {
 
 // Log in bot
 Client.login(process.env.TOKEN);
+
+// http://expressjs.com/en/starter/static-files.html
+app.use(express.static('public'));
+
+// http://expressjs.com/en/starter/basic-routing.html
+app.get('/', function(request, response) {
+  response.sendFile(__dirname + '/views/index.html');
+});
+
+// listen for requests :)
+var listener = app.listen(process.env.PORT, function () {
+  console.log('Your app is listening on port ' + listener.address().port);
+});
 
 // Save
 function save() {
