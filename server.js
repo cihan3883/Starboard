@@ -90,8 +90,10 @@ async function checkReaction(reaction, user, starAmount) {
       .setDescription(embed.description)
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setTimestamp()
-      .setFooter(`⭐ ${parseInt(starCount[1]) + starAmount} | ${message.id}`)
-      .setImage(image);
+      .setFooter(`⭐ ${parseInt(starCount[1]) + starAmount} | ${message.id}`);
+    
+    if (image)
+      newEmbed.setImage(image);
     
     let starMsg = await starboard.fetchMessage(starboardMessage.id);
     await starMsg.edit({ embed:newEmbed });   
@@ -110,8 +112,10 @@ async function checkReaction(reaction, user, starAmount) {
         .setDescription(message.cleanContent)
         .setAuthor(message.author.tag, message.author.displayAvatarURL())
         .setTimestamp(new Date())
-        .setFooter(`⭐ ${starCount} | ${message.id}`)
-        .setImage(image);
+        .setFooter(`⭐ ${starCount} | ${message.id}`);
+      
+      if (image)
+        newEmbed.setImage(image);
 
       await starboard.send({ embed:newEmbed });
     }    
