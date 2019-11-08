@@ -7,6 +7,19 @@ let data = JSON.parse(FS.readFileSync("data.json"));
 const Discord = require('discord.js');
 const client = new Discord.Client({"partials" : ['CHANNEL', 'MESSAGE']});
 
+// Global
+const starterEmbed = new Discord.MessageEmbed()
+  .setColor(config.defaultColour)
+  .setTitle('Some title')
+  .setDescription('Some description here')
+  .addField('Regular field title', 'Some value here')
+  .addBlankField()
+  .addField('Inline field title', 'Some value here', true)
+  .addField('Inline field title', 'Some value here', true)
+  .addField('Inline field title', 'Some value here', true)
+  .setTimestamp()
+  .setFooter(, process.env.BOT_ID.displayAvatarURL());
+
 client.on("ready", () => {
   console.log("StarBot started");
 });
@@ -27,21 +40,8 @@ client.on("message", (message) => {
   if (message.partial) return;
   
   if (message.content === "starter") {
-    let embed = new Discord.MessageEmbed()
-    .setColor(config.defaultColour)
-    .setTitle('Some title')
-    .setURL('https://discord.js.org/')
-    .setAuthor('Some name', 'https://i.imgur.com/wSTFkRM.png', 'https://discord.js.org')
-    .setDescription('Some description here')
-    .setThumbnail('https://i.imgur.com/wSTFkRM.png')
-    .addField('Regular field title', 'Some value here')
-    .addBlankField()
-    .addField('Inline field title', 'Some value here', true)
-    .addField('Inline field title', 'Some value here', true)
-    .addField('Inline field title', 'Some value here', true)
-    .setImage('https://i.imgur.com/wSTFkRM.png')
-    .setTimestamp()
-    .setFooter('Some footer text here', 'https://i.imgur.com/wSTFkRM.png');
+    let starboard = message.guild.channels.find(channel => channel.name === config.starboardChannel);   
+    starboard.send(starterEmbed);
   }
 });
 
