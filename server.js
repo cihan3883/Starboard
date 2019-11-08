@@ -11,18 +11,19 @@ client.on("ready", () => {
   console.log("StarBot started");
 });
 
-client.on("messageReactionAdd", (reaction, user) => {
+client.on("messageReactionAdd", async (reaction, user) => {
+  console.log("add reaction");
+  if (reaction.message.partial) await reaction.message.fetch();
   checkReaction(reaction, user, +1);
 });
 
-client.on("messageReactionRemove", (reaction, user) => {
+client.on("messageReactionRemove", async (reaction, user) => {
+  if (reaction.message.partial) await reaction.message.fetch();
   checkReaction(reaction, user, -1);
 })
 
-// Checks the reaction and reacts accordingly
+// Checks the reaction and responds accordingly
 async function checkReaction(reaction, user, starAmount) {
-  if (reaction.message.partial)
-    await reaction.message.fetch();
   
   let message = reaction.message;
   let image = message.attachments.size > 0 ? await extension(message.attachments.array()[0].url) : '';
