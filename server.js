@@ -62,11 +62,12 @@ async function checkReaction(reaction, user, starAmount) {
   
   let starboard = message.guild.channels.find(channel => channel.name === config.starboardChannel);
   let fetchedMessages = await starboard.messages.fetch({ limit: 100 });
+  let starboardMessage;
   try {
-    let starboardMessage = fetchedMessages.find(m => m.embeds[0].footer.text.startsWith('⭐') && m.embeds[0].footer.text.endsWith(message.id));
+    starboardMessage = fetchedMessages.find(m => m.embeds[0].footer.text.startsWith('⭐') && m.embeds[0].footer.text.endsWith(message.id));
   } catch(err) {
+    starboardMessage = false;
     console.log(err);
-    let
   }
   
   if (starboardMessage) {
