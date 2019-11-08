@@ -11,11 +11,76 @@ client.on("ready", () => {
   console.log("StarBot started");
 });
 
-client.on("messageReactionAdd", async (reaction, user) => {
-  
+client.on("messageReactionAdd", (reaction, user) => {
+  checkReaction(reaction, user, +1);
 });
 
-function
+client.on("messageReactionRemove", (reaction, user) => {
+  checkReaction
+})
+
+// Checks the reaction and reacts accordingly
+async function checkReaction(reaction, user, starAmount) {
+  let message = reaction.message;
+  let image = message.attachments.size > 0 ? await extension(message.attachments.array()[0].url) : '';
+  
+  // Reaction isn't a star
+  if (reaction.emoji.name !== '⭐') return;
+  // Message is your own
+  if (message.author.id === user.id)
+    //return message.channel.send(`${user}, you can't star your own messages.`);
+  // Message is from a bot
+  if (message.author.bot)
+    return message.channel.send(`${user}, you can't star bot messages.`);
+  // Message is empty
+  if (image === '' && message.cleanContent.length < 1)
+    return message.channel.send(`${user}, you cannot star an empty message.`);
+  
+  let starboard = message.guild.channels.find(channel => channel.name === config.starboardChannel);
+  let fetchedMessages = await starboard.fetchMessages({ limit: 100 });
+  let starboardMessage = fetchedMessages.find(m => m.embeds[0].footer.text.startsWith('⭐') && m.embeds[0].footer.text.endsWith(message.id));
+  
+  if (starboardMessage) {
+  // Old message    
+    let starCount = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(starboardMessage.embeds[0].footer.text);
+    let embed = starboardMessage.embeds[0];
+    let newStarCount = parseInt(starCount) + starAmount;
+    
+    if (newStarCount < config.minimumStars)
+      return starboardMessage.delete(1500);
+    
+    // Create embed message
+    const newEmbed = new Discord.RichEmbed()
+      .setColor(embed.color)
+      .setDescription(embed.description)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL)
+      .setTimestamp()
+      .setFooter(`⭐ ${parseInt(starCount[1]) + starAmount} | ${message.id}`)
+      .setImage(image);
+    
+    let starMsg = await starboard.fetchMessage(starboardMessage.id);
+    await starMsg.edit({ embed:newEmbed });   
+  } else {
+  // New message
+    let starCount = message.reactions.get(reaction.emoji.name).count;
+    //if (message.reactions.get(reaction.emoji.name).users.has(message.author.id)) starCount--;
+    
+    // Only add to starboard if over minimum stars
+    if (starCount >= config.minimumStars) {
+      
+      // Create embed message
+      let newEmbed = new Discord.RichEmbed()
+        .setColor(config.defaultColour)
+        .setDescription(message.cleanContent)
+        .setAuthor(message.author.tag, message.author.displayAvatarURL)
+        .setTimestamp(new Date())
+        .setFooter(`⭐ ${starCount} | ${message.id}`)
+        .setImage(image);
+
+      await starboard.send({ embed:newEmbed });
+    }    
+  }
+}
 
 function extension(attachment) {
     let imageLink = attachment.split('.');
