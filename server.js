@@ -8,6 +8,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client({"partials" : ['CHANNEL', 'MESSAGE']});
 
 // Global
+let avatar = 
 const starterEmbed = new Discord.MessageEmbed()
   .setColor(config.defaultColour)
   .setTitle('Some title')
@@ -18,7 +19,7 @@ const starterEmbed = new Discord.MessageEmbed()
   .addField('Inline field title', 'Some value here', true)
   .addField('Inline field title', 'Some value here', true)
   .setTimestamp()
-  .setFooter(, process.env.BOT_ID.displayAvatarURL());
+  .setFooter('StarBoard', client.users.fetch(process.env.BOT_ID).displayAvatarURL());
 
 client.on("ready", () => {
   console.log("StarBot started");
