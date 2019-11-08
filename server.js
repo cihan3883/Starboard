@@ -55,10 +55,10 @@ async function checkReaction(reaction, user, starAmount) {
   
   // Message is from a bot
   if (message.author.bot)
-    return message.reply("you can't star bot messages.");
+    return message.channel.send(`${user} you can't star bot messages.`);
   // Message is empty
   if (image === '' && message.cleanContent.length < 1)
-    return message.reply("you can't star an empty message.");
+    return message.channel.send(`${user} you can't star an empty message.`);
   
   let starboard = message.guild.channels.find(channel => channel.name === config.starboardChannel);
   let fetchedMessages = await starboard.messages.fetch({ limit: 100 });
