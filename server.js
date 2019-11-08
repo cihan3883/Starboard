@@ -22,6 +22,9 @@ client.on("messageReactionRemove", async (reaction, user) => {
   checkReaction(reaction, user, -1);
 })
 
+
+client.on
+
 // Checks the reaction and responds accordingly
 async function checkReaction(reaction, user, starAmount) {
   
@@ -59,10 +62,10 @@ async function checkReaction(reaction, user, starAmount) {
     }
     
     // Create embed message
-    const newEmbed = new Discord.RichEmbed()
+    let newEmbed = new Discord.MessageEmbed()
       .setColor(embed.color)
       .setDescription(embed.description)
-      .setAuthor(message.author.tag, message.author.displayAvatarURL)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setTimestamp()
       .setFooter(`⭐ ${parseInt(starCount[1]) + starAmount} | ${message.id}`)
       .setImage(image);
@@ -79,10 +82,10 @@ async function checkReaction(reaction, user, starAmount) {
     if (starCount >= config.minimumStars) {
       
       // Create embed message
-      let newEmbed = new Discord.RichEmbed()
+      let newEmbed = new Discord.MessageEmbed()
         .setColor(config.defaultColour)
         .setDescription(message.cleanContent)
-        .setAuthor(message.author.tag, message.author.displayAvatarURL)
+        .setAuthor(message.author.tag, message.author.displayAvatarURL())
         .setTimestamp(new Date())
         .setFooter(`⭐ ${starCount} | ${message.id}`)
         .setImage(image);
