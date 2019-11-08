@@ -5,13 +5,13 @@ let data = JSON.parse(FS.readFileSync("data.json"));
 
 // Discord
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const client = new Discord.Client({"partials" : ['CHANNEL', 'MESSAGE']});
 
 client.on("ready", () => {
   console.log("StarBot started");
 });
 
-client.on("messageReactionAdd", (reaction, user) => {
+client.on("messageReactionAdd", async (reaction, user) => {
   checkReaction(reaction, user, +1);
 });
 
