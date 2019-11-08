@@ -1,25 +1,24 @@
 // Init project
-var express = require('express');
-var bodyParser = require('body-parser');
-var app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
 const FS = require('file-system');
-
 let config = JSON.parse(FS.readFileSync("config.json"));
 let data = JSON.parse(FS.readFileSync("data.json"));
 
 // Discord
 const Discord = require('discord.js');
-const Client = new Discord.Client();
+const client = new Discord.Client();
 
-Client.on("ready", () => {
+client.on("ready", () => {
   console.log("StarBot started");
 });
 
+client.on("message", (message) => {
+  console.log("message");
+});
 
-Client.on("messageReactionAdd", async (reaction, user) => {
+client.on("messageReactionAdd", (reaction, user) => {
+  re
   console.log("reacted");
-  let message = reaction.message;
+  /*let message = reaction.message;
   let image = message.attachments.size > 0 ? await this.extension(message.attachments.array()[0].url) : '';
   
   console.log("passed image");
@@ -78,7 +77,7 @@ Client.on("messageReactionAdd", async (reaction, user) => {
 
       await starboard.send({ newEmbed });
     }    
-  }  
+  }*/
 });
 
 function extension(attachment) {
@@ -90,20 +89,7 @@ function extension(attachment) {
 }
 
 // Log in bot
-Client.login(process.env.TOKEN);
-
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
-
-// http://expressjs.com/en/starter/basic-routing.html
-app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/views/index.html');
-});
-
-// listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
-});
+client.login(process.env.TOKEN);
 
 // Save
 function save() {
