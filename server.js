@@ -73,7 +73,6 @@ async function checkReaction(reaction, user, starAmount) {
   if (starboardMessage) {
   // Old message
     console.log("old message");
-    console.log(starboardMessage.embeds[0].footer);
     let starCount = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(starboardMessage.embeds[0].footer.text);
     console.log(starCount);
     let embed = starboardMessage.embeds[0];
