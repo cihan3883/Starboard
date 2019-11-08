@@ -16,7 +16,7 @@ client.on("messageReactionAdd", (reaction, user) => {
 });
 
 client.on("messageReactionRemove", (reaction, user) => {
-  checkReaction
+  checkReaction(reaction, user, -1);
 })
 
 // Checks the reaction and reacts accordingly
@@ -41,13 +41,18 @@ async function checkReaction(reaction, user, starAmount) {
   let starboardMessage = fetchedMessages.find(m => m.embeds[0].footer.text.startsWith('⭐') && m.embeds[0].footer.text.endsWith(message.id));
   
   if (starboardMessage) {
-  // Old message    
+  // Old message
+    console.log("old message");
     let starCount = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(starboardMessage.embeds[0].footer.text);
     let embed = starboardMessage.embeds[0];
-    let newStarCount = parseInt(starCount) + starAmount;
+    let newStarCount = parseInt(starCount[1]) + starAmount;
+    console.log("count: " + newStarCount);
     
-    if (newStarCount < config.minimumStars)
+    // Remove from starboard if under minimum stars
+    if (newStarCount < config.minimumStars) {
+      console.log("delete message");
       return starboardMessage.delete(1500);
+    }
     
     // Create embed message
     const newEmbed = new Discord.RichEmbed()
@@ -62,10 +67,11 @@ async function checkReaction(reaction, user, starAmount) {
     await starMsg.edit({ embed:newEmbed });   
   } else {
   // New message
+    console.log("new message");
     let starCount = message.reactions.get(reaction.emoji.name).count;
     //if (message.reactions.get(reaction.emoji.name).users.has(message.author.id)) starCount--;
     
-    // Only add to starboard if over minimum stars
+    // Add to starboard if over minimum stars
     if (starCount >= config.minimumStars) {
       
       // Create embed message
