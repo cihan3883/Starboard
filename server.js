@@ -15,11 +15,10 @@ client.on("message", (message) => {
   console.log("message");
 });
 
-client.on("messageReactionAdd", (reaction, user) => {
-  re
+client.on("messageReactionAdd", async (reaction, user) => {
   console.log("reacted");
-  /*let message = reaction.message;
-  let image = message.attachments.size > 0 ? await this.extension(message.attachments.array()[0].url) : '';
+  let message = reaction.message;
+  let image = message.attachments.size > 0 ? await extension(message.attachments.array()[0].url) : '';
   
   console.log("passed image");
   
@@ -27,7 +26,7 @@ client.on("messageReactionAdd", (reaction, user) => {
   if (reaction.emoji.name !== '⭐') return;
   // Message is your own
   if (message.author.id === user.id)
-    return message.channel.send(`${user}, you can't star your own messages.`);
+    //return message.channel.send(`${user}, you can't star your own messages.`);
   // Message is from a bot
   if (message.author.bot)
     return message.channel.send(`${user}, you can't star bot messages.`);
@@ -42,7 +41,7 @@ client.on("messageReactionAdd", (reaction, user) => {
   console.log("channel: " + starboard);
   starboard.send("star");
   
-  if (starboardMessage !== undefined) {
+  if (!starboardMessage !== null) {
   // Old message    
     let starCount = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(starboardMessage.embeds[0].footer.text);
     let embed = starboardMessage.embeds[0];
@@ -61,7 +60,7 @@ client.on("messageReactionAdd", (reaction, user) => {
   } else {
   // New message
     let starCount = message.reactions.get(reaction.emoji.name).count;
-    if (message.reactions.get(reaction.emoji.name).users.has(message.author.id)) starCount--;
+    //if (message.reactions.get(reaction.emoji.name).users.has(message.author.id)) starCount--;
     
     // Only add to starboard if over minimum stars
     if (starCount >= config.minimumStars) {
@@ -77,7 +76,7 @@ client.on("messageReactionAdd", (reaction, user) => {
 
       await starboard.send({ newEmbed });
     }    
-  }*/
+  }
 });
 
 function extension(attachment) {
