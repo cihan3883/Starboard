@@ -17,12 +17,9 @@
   "engines": {
     "node": "10.15.3"
   },
-  "repository": {
-    "url": "https://glitch.com/edit/#!/hello-sqlite"
-  },
   "license": "MIT",
   "keywords": [
     "node",
-    "glitch",
+    "glitch"
   ]
 }
