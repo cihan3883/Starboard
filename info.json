@@ -1,4 +1,4 @@
 {
-  "starboardChannel" : "starboard"
-  ""
+  "starboardChannel" : "starboard",
+  "minimumVotes" : 3
 }
