@@ -11,9 +11,9 @@ const client = new Discord.Client({"partials" : ['CHANNEL', 'MESSAGE']});
 const starterEmbed = new Discord.MessageEmbed()
   .setColor(config.defaultColour)
   .setTitle('Welcome to the starboard!')
-  .setDescription(`You can react to any message with the ⭐ emoji, and once it has ${config.minimumStars} stars it will be added to the messages in this channel.`)
-  .addField('Source Code', '[view](https://glitch.com/~leo-starboard-bot)')
-  .setTimestamp()
+  .setDescription(`You can react to any message with the ⭐ emoji, and once it has ${config.minimumStars} stars it will be added to the board.
+
+  [source code](https://glitch.com/~leo-starboard-bot)`);
 
 client.on("ready", () => {
   console.log("StarBot started");
@@ -50,7 +50,7 @@ async function checkReaction(reaction, user, starAmount) {
   if (reaction.emoji.name !== '⭐') return;
   // Message is your own
   if (message.author.id === user.id)
-    //return message.channel.send(`${user}, you can't star your own messages.`);
+    return message.channel.reply("you can't star your own messages.");
   // Message is from a bot
   if (message.author.bot)
     return message.channel.send(`${user}, you can't star bot messages.`);
