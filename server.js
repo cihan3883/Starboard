@@ -23,10 +23,8 @@ Client.on("MessageReactionAdd", async (reaction, user) => {
   if (message.author.bot)
     return message.channel.send(`${user}, you cannot star bot messages.`);
   
-  let starboardChannel = config.starboardChannel;
-  const starChannel = message.guild.channels.find(channel => channel.name === starboardChannel)
-  if (!starChannel) return message.channel.send(`It appears that you do not have a \`${starboardChannel}\` channel.`); 
-  const fetchedMessages = await starChannel.fetchMessages({ limit: 100 });
+  let starChannel = message.guild.channels.find(channel => channel.name === config.starboardChannel);
+  let fetchedMessages = await starChannel.fetchMessages({ limit: 100 });
   const stars = fetchedMessages.find(m => m.embeds[0].footer.text.startsWith('⭐') && m.embeds[0].footer.text.endsWith(message.id));
   if (stars) {
     const star = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(stars.embeds[0].footer.text);
