@@ -23,7 +23,13 @@ client.on("messageReactionRemove", async (reaction, user) => {
 })
 
 
-client.on
+client.on("message", (message) => {
+  if (message.partial) return;
+  
+  if (message.content === "starter") {
+    let embed = new Discord.MessageEmbed()
+  }
+});
 
 // Checks the reaction and responds accordingly
 async function checkReaction(reaction, user, starAmount) {
