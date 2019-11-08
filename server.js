@@ -89,7 +89,6 @@ async function checkReaction(reaction, user, starAmount) {
       .setColor(embed.color)
       .setDescription(embed.description)
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
-      .addField('Original Message', `[view](${message.url})`)
       .setTimestamp()
       .setFooter(`⭐ ${parseInt(starCount[1]) + starAmount} | ${message.id}`);
     
@@ -112,7 +111,6 @@ async function checkReaction(reaction, user, starAmount) {
         .setColor(config.defaultColour)
         .setDescription(message.cleanContent)
         .setAuthor(message.author.tag, message.author.displayAvatarURL())
-        .addField('Original Message', `[view](${message.url})`)
         .setTimestamp(new Date())
         .setFooter(`⭐ ${starCount} | ${message.id}`);
       
