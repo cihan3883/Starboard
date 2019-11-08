@@ -29,31 +29,43 @@ Client.on("MessageReactionAdd", async (reaction, user) => {
   let starboardMessage = fetchedMessages.find(m => m.embeds[0].footer.text.startsWith('⭐') && m.embeds[0].footer.text.endsWith(message.id));
   
   if (starboardMessage !== undefined) {
-    let starAmount = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(starboardMessage.embeds[0].footer.text);
+  // Old message    
+    let starCount = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(starboardMessage.embeds[0].footer.text);
     let embed = starboardMessage.embeds[0];
     let image = message.attachments.size > 0 ? await extension(message.attachments.array()[0].url) : '';
+    
+    // Create embed message
     const newEmbed = new Discord.RichEmbed()
       .setColor(embed.color)
       .setDescription(embed.description)
       .setAuthor(message.author.tag, message.author.displayAvatarURL)
       .setTimestamp()
-      .setFooter(`⭐ ${parseInt(starAmount[1])+1} | ${message.id}`)
+      .setFooter(`⭐ ${parseInt(starCount[1]) + 1} | ${message.id}`)
       .setImage(image);
+    
     let starMsg = await starboard.fetchMessage(starboardMessage.id);
-    await starMsg.edit({newEmbed} );
+    await starMsg.edit({ newEmbed });
+    
   } else {
-    const image = message.attachments.size > 0 ? await this.extension(message.attachments.array()[0].url) : '';
-    if (image === '' && message.cleanContent.length < 1) return message.channel.send(`${user}, you cannot star an empty message.`);
-    const embed = new Discord.RichEmbed()
+  // New message
+    let image = message.attachments.size > 0 ? await this.extension(message.attachments.array()[0].url) : '';
+    
+    // Check for empty message
+    if (image === '' && message.cleanContent.length < 1)
+      return message.channel.send(`${user}, you cannot star an empty message.`);
+    
+    // Create embed message
+    let newEmbed = new Discord.RichEmbed()
       .setColor(config.defaultColour)
       .setDescription(message.cleanContent)
       .setAuthor(message.author.tag, message.author.displayAvatarURL)
       .setTimestamp(new Date())
       .setFooter(`⭐ 1 | ${message.id}`)
       .setImage(image);
-    await starboard.send({ embed });
-  }
-  
+    
+    await starboard.send({ newEmbed });
+    
+  }  
 });
 
 function extension(attachment) {
