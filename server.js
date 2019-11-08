@@ -89,7 +89,7 @@ async function checkReaction(reaction, user, starAmount) {
       .setColor(embed.color)
       .setDescription(embed.description)
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
-      .addField(`[original message](${message.url})`, true)
+      .addField('Original Message', ``)
       .setTimestamp()
       .setFooter(`⭐ ${parseInt(starCount[1]) + starAmount} | ${message.id}`);
     
