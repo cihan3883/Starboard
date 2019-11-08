@@ -53,9 +53,6 @@ async function checkReaction(reaction, user, starAmount) {
   // Reaction isn't a star
   if (reaction.emoji.name !== '⭐') return;
   
-  // Message is your own
-  if (message.author.id === user.id)
-    return message.reply("you can't star your own messages.");
   // Message is from a bot
   if (message.author.bot)
     return message.reply("you can't star bot messages.");
