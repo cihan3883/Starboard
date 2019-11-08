@@ -14,15 +14,16 @@ Client.on("ready", () => {
 
 Client.on("MessageReactionAdd", async (reaction, user) => {
   let message = reaction.message;
+  let image = message.attachments.size > 0 ? await this.extension(message.attachments.array()[0].url) : '';
   
   // Reaction isn't a star
   if (reaction.emoji.name !== '⭐') return;
   // Reacting to your own message
   if (message.author.id === user.id)
-    return message.channel.send(`${user}, you cannot star your own messages.`);
+    return message.channel.send(`${user}, you can't star your own messages.`);
   // Message is from a bot
   if (message.author.bot)
-    return message.channel.send(`${user}, you cannot star bot messages.`);
+    return message.channel.send(`${user}, you can't star bot messages.`);
   
   let starboard = message.guild.channels.find(channel => channel.name === config.starboardChannel);
   let fetchedMessages = await starboard.fetchMessages({ limit: 100 });
@@ -32,7 +33,6 @@ Client.on("MessageReactionAdd", async (reaction, user) => {
   // Old message    
     let starCount = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(starboardMessage.embeds[0].footer.text);
     let embed = starboardMessage.embeds[0];
-    let image = message.attachments.size > 0 ? await extension(message.attachments.array()[0].url) : '';
     
     // Create embed message
     const newEmbed = new Discord.RichEmbed()
@@ -44,27 +44,31 @@ Client.on("MessageReactionAdd", async (reaction, user) => {
       .setImage(image);
     
     let starMsg = await starboard.fetchMessage(starboardMessage.id);
-    await starMsg.edit({ newEmbed });
-    
+    await starMsg.edit({ newEmbed });   
   } else {
   // New message
-    let image = message.attachments.size > 0 ? await this.extension(message.attachments.array()[0].url) : '';
+    let starCount = message.reactions.get(reaction.emoji.name).count;
+    if (message.reactions.get(reaction.emoji.name).users.has(message.author.id)) starCount--;
     
-    // Check for empty message
-    if (image === '' && message.cleanContent.length < 1)
-      return message.channel.send(`${user}, you cannot star an empty message.`);
-    
-    // Create embed message
-    let newEmbed = new Discord.RichEmbed()
-      .setColor(config.defaultColour)
-      .setDescription(message.cleanContent)
-      .setAuthor(message.author.tag, message.author.displayAvatarURL)
-      .setTimestamp(new Date())
-      .setFooter(`⭐ 1 | ${message.id}`)
-      .setImage(image);
-    
-    await starboard.send({ newEmbed });
-    
+    // Only add to starboard if over minimum stars
+    if (starCount >= config.minimumStars) {
+      let image = message.attachments.size > 0 ? await this.extension(message.attachments.array()[0].url) : '';
+
+      // Check for empty message
+      if (image === '' && message.cleanContent.length < 1)
+        return message.channel.send(`${user}, you cannot star an empty message.`);
+
+      // Create embed message
+      let newEmbed = new Discord.RichEmbed()
+        .setColor(config.defaultColour)
+        .setDescription(message.cleanContent)
+        .setAuthor(message.author.tag, message.author.displayAvatarURL)
+        .setTimestamp(new Date())
+        .setFooter(`⭐ 1 | ${message.id}`)
+        .setImage(image);
+
+      await starboard.send({ newEmbed });
+    }    
   }  
 });
 

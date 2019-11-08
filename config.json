@@ -1,5 +1,5 @@
 {
   "starboardChannel" : "starboard",
-  "minimumVotes" : 1,
+  "minimumStars" : 1,
   "defaultColour" : 15844367
 }
