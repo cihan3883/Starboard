@@ -73,8 +73,9 @@ async function checkReaction(reaction, user, starAmount) {
   if (starboardMessage) {
   // Old message
     console.log("old message");
-    console.log(starboardMessage.description);
+    console.log(starboardMessage.embeds[0].footer);
     let starCount = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(starboardMessage.embeds[0].footer.text);
+    console.log(starCount);
     let embed = starboardMessage.embeds[0];
     let newStarCount = parseInt(starCount[1]) + starAmount;
     console.log("count: " + newStarCount);
@@ -90,6 +91,7 @@ async function checkReaction(reaction, user, starAmount) {
       .setColor(embed.color)
       .setDescription(embed.description)
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
+      .addField('Original Message', `[view](${message.url})`)
       .setTimestamp()
       .setFooter(`⭐ ${parseInt(starCount[1]) + starAmount} | ${message.id}`);
     
@@ -112,6 +114,7 @@ async function checkReaction(reaction, user, starAmount) {
         .setColor(config.defaultColour)
         .setDescription(message.cleanContent)
         .setAuthor(message.author.tag, message.author.displayAvatarURL())
+        .addField('Original Message', `[view](${message.url})`)
         .setTimestamp(new Date())
         .setFooter(`⭐ ${starCount} | ${message.id}`);
       
