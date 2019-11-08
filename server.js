@@ -11,7 +11,7 @@ const client = new Discord.Client({"partials" : ['CHANNEL', 'MESSAGE']});
 const starterEmbed = new Discord.MessageEmbed()
   .setColor(config.defaultColour)
   .setTitle('Welcome to the starboard!')
-  .setDescription(`You can react to any message with the ⭐ emoji, and once it has ${config.minimumStars} stars it will be added to the board.
+  .setDescription(`You can react to any message with the ⭐ emoji, and once it has ${config.minimumStars} stars it will be added to the board! ⭐:sunglasses:
 
   [source code](https://glitch.com/~leo-starboard-bot)`);
 
@@ -31,13 +31,9 @@ client.on("messageReactionRemove", async (reaction, user) => {
 })
 
 
-client.on("message", (message) => {
-  if (message.partial) return;
-  
-  if (message.content === "starter") {
-    let starboard = message.guild.channels.find(channel => channel.name === config.starboardChannel);   
+client.on("guildCreate", guild => {
+    let starboard = guild.channels.find(channel => channel.name === config.starboardChannel);   
     starboard.send(starterEmbed);
-  }
 });
 
 // Checks the reaction and responds accordingly
@@ -48,15 +44,16 @@ async function checkReaction(reaction, user, starAmount) {
   
   // Reaction isn't a star
   if (reaction.emoji.name !== '⭐') return;
+  
   // Message is your own
   if (message.author.id === user.id)
-    return message.channel.reply("you can't star your own messages.");
+    return message.reply("you can't star your own messages.");
   // Message is from a bot
   if (message.author.bot)
-    return message.channel.send(`${user}, you can't star bot messages.`);
+    return message.reply("you can't star bot messages.");
   // Message is empty
   if (image === '' && message.cleanContent.length < 1)
-    return message.channel.send(`${user}, you cannot star an empty message.`);
+    return message.reply("you can't star an empty message.");
   
   let starboard = message.guild.channels.find(channel => channel.name === config.starboardChannel);
   let fetchedMessages = await starboard.messages.fetch({ limit: 100 });
@@ -91,7 +88,7 @@ async function checkReaction(reaction, user, starAmount) {
   // New message
     console.log("new message");
     let starCount = message.reactions.get(reaction.emoji.name).count;
-    //if (message.reactions.get(reaction.emoji.name).users.has(message.author.id)) starCount--;
+    if (message.reactions.get(reaction.emoji.name).users.has(message.author.id)) starCount--;
     
     // Add to starboard if over minimum stars
     if (starCount >= config.minimumStars) {
