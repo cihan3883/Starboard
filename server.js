@@ -36,12 +36,11 @@ client.on("messageReactionAdd", async (reaction, user) => {
   
   let starboard = message.guild.channels.find(channel => channel.name === config.starboardChannel);
   let fetchedMessages = await starboard.fetchMessages({ limit: 100 });
-  let starboardMessage = fetchedMessages.find(m => m.embeds[0].footer.text.startsWith('⭐') && m.embeds[0].footer.text.endsWith(message.id));
+  //let starboardMessage = fetchedMessages.find(m => m.embeds[0].footer.text.startsWith('⭐') && m.embeds[0].footer.text.endsWith(message.id));
   
-  console.log("channel: " + starboard);
-  starboard.send("star");
+  //starboard.send("star");
   
-  if (!starboardMessage !== null) {
+  /*if (starboardMessage) {
   // Old message    
     let starCount = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(starboardMessage.embeds[0].footer.text);
     let embed = starboardMessage.embeds[0];
@@ -57,7 +56,7 @@ client.on("messageReactionAdd", async (reaction, user) => {
     
     let starMsg = await starboard.fetchMessage(starboardMessage.id);
     await starMsg.edit({ newEmbed });   
-  } else {
+  } else*/ {
   // New message
     let starCount = message.reactions.get(reaction.emoji.name).count;
     //if (message.reactions.get(reaction.emoji.name).users.has(message.author.id)) starCount--;
@@ -66,13 +65,41 @@ client.on("messageReactionAdd", async (reaction, user) => {
     if (starCount >= config.minimumStars) {
       
       // Create embed message
-      let newEmbed = new Discord.RichEmbed()
+      /*let newEmbed = new Discord.RichEmbed()
         .setColor(config.defaultColour)
         .setDescription(message.cleanContent)
         .setAuthor(message.author.tag, message.author.displayAvatarURL)
         .setTimestamp(new Date())
         .setFooter(`⭐ ${starCount} | ${message.id}`)
-        .setImage(image);
+        .setImage(image);*/
+      console.log("Starting embed");
+      let newEmbed = new Discord.RichEmbed()
+        .setTitle("This is your title, it can hold 256 characters")
+        .setAuthor("Author Name", "https://i.imgur.com/lm8s41J.png")
+        /*
+         * Alternatively, use "#00AE86", [0, 174, 134] or an integer number.
+         */
+        .setColor(0x00AE86)
+        .setDescription("This is the main body of text, it can hold 2048 characters.")
+        .setFooter("This is the footer text, it can hold 2048 characters", "http://i.imgur.com/w1vhFSR.png")
+        .setImage("http://i.imgur.com/yVpymuV.png")
+        .setThumbnail("http://i.imgur.com/p2qNFag.png")
+        /*
+         * Takes a Date object, defaults to current date.
+         */
+        .setTimestamp()
+        .setURL("https://discord.js.org/#/docs/main/indev/class/RichEmbed")
+        .addField("This is a field title, it can hold 256 characters",
+          "This is a field value, it can hold 1024 characters.")
+        /*
+         * Inline fields may not display as inline if the thumbnail and/or image is too big.
+         */
+        .addField("Inline Field", "They can also be inline.", true)
+        /*
+         * Blank field, useful to create some space.
+         */
+        .addBlankField(true)
+        .addField("Inline Field 3", "You can have a maximum of 25 fields.", true);
 
       await starboard.send({ newEmbed });
     }    
