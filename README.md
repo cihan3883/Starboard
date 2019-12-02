@@ -5,7 +5,7 @@ Discord.js Bot Template
 
 ----------
 
-Click on `discord-js-bot-template` in the top-left corner of this window, and click "Remix Project".
+Click on `leo-discord-bot-template` in the top-left corner of this window, and click "Remix Project".
 
 It should duplicate this template into your account. You can then edit it and create your own bot.
 
@@ -29,39 +29,31 @@ Copy its token and paste it in the `.env` file, like this:
 
 ----------
 
-Copy your bot's Client ID from its Discord Apps page.
-
-In the following link, replace YOUR_CLIENT_ID with your actual Client ID, to get an invite link for the bot:
-
-https://discordapp.com/oauth2/authorize?&client_id=YOUR_CLIENT_ID&scope=bot&permissions=0
-
-----------
-
 Discord -> Settings -> Appearance -> Enable "Developer Mode"
 
 Right-click on your bot (in Discord) and click "Copy ID"
 .
-Paste that ID in line 40 of `server.js`
+Paste that ID to the BOT_ID in the `.env` file, like this:
 
-**~ Commands ~**
-
-----------
-
-Under the switch() at line 33 of `server.js`.
-
-**~ Message Replies ~**
+```BOT_ID="YOUR_BOT_ID" //Quotes are required```
 
 ----------
 
-Inside the if() block at line 40 of `server.js`.
+Copy your bot's Client ID from its Discord Apps page.
+
+In the following link, replace YOUR_CLIENT_ID with your actual Client ID to get an invite link for the bot:
+
+https://discordapp.com/oauth2/authorize?&client_id=YOUR_CLIENT_ID&scope=bot&permissions=0
+
+You could also use the permissions calculator on Discord Apps and replace the 0 in the link with a new value to give the bot the specified permissions directly. This step is optional though, as it also works to just edit the bot's permissions after joining the server.
 
 **~ Saving Data ~**
 
 ----------
 
-Add your stuff inside the `info` object and use `save()`.
+Add your data to the `data` object and then use the `save()` function.
 
-It will be saved into `info.json` and will be loaded back into the `info` object whenever the bot restarts.
+It will be saved into `data.json` and will be loaded back into the `data` object whenever the bot restarts.
 
 **~ Keeping the bot up ~**
 
@@ -75,7 +67,7 @@ On Uptime Robot, add a new monitor, and select `HTTP(s)` as its type. Add a name
 
 It should keep the bot up.
 
-Made by [Matharoo](https://twitter.com/itsmatharoo)
+Made by Qweleo based on [Matharoo](https://twitter.com/itsmatharoo)'s original tutorial
 -------------------
 
 \ (゜o゜)ノ
