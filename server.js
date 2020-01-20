@@ -11,9 +11,7 @@ const client = new Discord.Client({"partials" : ['CHANNEL', 'MESSAGE']});
 const starterEmbed = new Discord.MessageEmbed()
   .setColor(config.defaultColour)
   .setTitle('Welcome to the starboard!')
-  .setDescription(`You can react to any message with the ⭐ emoji, and once it has ${config.minimumStars} stars it will be added to the board! ⭐:sunglasses:
-
-  [source code](https://glitch.com/~leo-starboard-bot)`);
+  .setDescription(`You can react to any message with the ⭐ emoji, and once it has ${config.minimumStars} stars it will be added to the board! ⭐:sunglasses:`);
 
 client.on("ready", () => {
   console.log("StarBot started");
