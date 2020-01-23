@@ -10,11 +10,11 @@ const client = new Discord.Client({"partials" : ['CHANNEL', 'MESSAGE']});
 // Global
 const starterEmbed = new Discord.MessageEmbed()
   .setColor(config.defaultColour)
-  .setTitle('Welcome to the starboard!')
-  .setDescription(`You can react to any message with the ⭐ emoji, and once it has ${config.minimumStars} stars it will be added to the board! ⭐:sunglasses:`);
+  .setTitle('Starboard Kurulumuna Hoşgeldin!')
+  .setDescription(`Herhangi bir mesaja ⭐ emoji ile tepki verebilirsiniz ve ${config.minimumStars} yıldızına sahip olduktan sonra panoya eklenir! ⭐ :sunglasses:`);
 
 client.on("ready", () => {
-  console.log("StarBot started");
+  console.log("StarBot Başlatıldı");
 });
 
 client.on("messageReactionAdd", async (reaction, user) => {
@@ -36,8 +36,8 @@ client.on("guildCreate", guild => {
 
 client.on("message", message => {
     let starboard = message.guild.channels.find(channel => channel.name === config.starboardChannel);   
-    if (message.content == "start") {
-      console.log("start");
+    if (message.content == "başlat") {
+      console.log("Başlatıldı");
       starboard.send(starterEmbed);
     }
 });
@@ -53,10 +53,10 @@ async function checkReaction(reaction, user, starAmount) {
   
   // Message is from a bot
   if (message.author.bot)
-    return message.channel.send(`${user} you can't star messages from bots.`);
+    return message.channel.send(`${user} botlardan gelen mesajlara yıldız ekleyemezsin.`);
   // Message is empty
   if (image === '' && message.cleanContent.length < 1)
-    return message.channel.send(`${user} you can't star an empty message.`);
+    return message.channel.send(`${user} boş bir mesaja yıldız ekleyemezsin.`);
   
   let starboard = message.guild.channels.find(channel => channel.name === config.starboardChannel);
   let fetchedMessages = await starboard.messages.fetch({ limit: 100 });
@@ -75,22 +75,22 @@ async function checkReaction(reaction, user, starAmount) {
     console.log(starCount);
     let embed = starboardMessage.embeds[0];
     let newStarCount = parseInt(starCount[1]) + starAmount;
-    console.log("count: " + newStarCount);
+    console.log("Miktar: " + newStarCount);
     
     // Remove from starboard if under minimum stars
     if (newStarCount < config.minimumStars) {
-      console.log("delete message");
+      console.log("Mesaj Silindi");
       return starboardMessage.delete(1500);
     }
     
     // Create embed message
     let newEmbed = new Discord.MessageEmbed()
       .setColor(embed.color)
-      .setDescription(embed.description)
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
-      .addField('Original Message', `[view](${message.url})`)
+      .addField(`Mesaj içeriği`, embed.description)
+      .addField('Orijinal mesaj ', `[Mesaja Git](${message.url})` + "**  **")
       .setTimestamp()
-      .setFooter(`⭐ ${parseInt(starCount[1]) + starAmount} | ${message.id}`);
+      .setFooter(`⭐ ${parseInt(starCount[1]) + starAmount} | ${message.id} ${message.channel}`);
     
     if (image)
       newEmbed.setImage(image);
@@ -111,9 +111,9 @@ async function checkReaction(reaction, user, starAmount) {
         .setColor(config.defaultColour)
         .setDescription(message.cleanContent)
         .setAuthor(message.author.tag, message.author.displayAvatarURL())
-        .addField('Original Message', `[view](${message.url})`)
+        .addField('Orijinal mesaj', `[Mesaja Git](${message.url})`+ "**  **")
         .setTimestamp(new Date())
-        .setFooter(`⭐ ${starCount} | ${message.id}`);
+        .setFooter(`⭐ ${starCount} | ${message.id} <#${message.channel}>`);
       
       if (image)
         newEmbed.setImage(image);
