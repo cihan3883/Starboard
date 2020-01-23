@@ -1,4 +1,4 @@
-// Init project
+// Projeyi başlatma kısmı
 const FS = require('file-system');
 let config = JSON.parse(FS.readFileSync("config.json"));
 let data = JSON.parse(FS.readFileSync("data.json"));
@@ -7,7 +7,7 @@ let data = JSON.parse(FS.readFileSync("data.json"));
 const Discord = require('discord.js');
 const client = new Discord.Client({"partials" : ['CHANNEL', 'MESSAGE']});
 
-// Global
+// Bilgi
 const starterEmbed = new Discord.MessageEmbed()
   .setColor(config.defaultColour)
   .setTitle('Starboard Kurulumuna Hoşgeldin!')
@@ -42,7 +42,7 @@ client.on("message", message => {
     }
 });
 
-// Checks the reaction and responds accordingly
+// Reaksiyonu kontrol eder ve buna göre cevap verir
 async function checkReaction(reaction, user, starAmount) {
   
   let message = reaction.message;
@@ -69,7 +69,8 @@ async function checkReaction(reaction, user, starAmount) {
   }
   
   if (starboardMessage) {
-  // Old message
+  // Eski mesaj
+
     console.log("old message");
     let starCount = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(starboardMessage.embeds[0].footer.text);
     console.log(starCount);
@@ -77,20 +78,19 @@ async function checkReaction(reaction, user, starAmount) {
     let newStarCount = parseInt(starCount[1]) + starAmount;
     console.log("Miktar: " + newStarCount);
     
-    // Remove from starboard if under minimum stars
     if (newStarCount < config.minimumStars) {
       console.log("Mesaj Silindi");
       return starboardMessage.delete(1500);
     }
     
-    // Create embed message
+    // Mesajı oluştur
     let newEmbed = new Discord.MessageEmbed()
       .setColor(embed.color)
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .addField(`Mesaj içeriği`, embed.description)
       .addField('Orijinal mesaj ', `[Mesaja Git](${message.url})` + "**  **")
       .setTimestamp()
-      .setFooter(`⭐ ${parseInt(starCount[1]) + starAmount} | ${message.id} ${message.channel}`);
+      .setFooter(`🌟 ${parseInt(starCount[1]) + starAmount} | ${message.id} `);
     
     if (image)
       newEmbed.setImage(image);
@@ -98,22 +98,21 @@ async function checkReaction(reaction, user, starAmount) {
     let starMsg = await starboard.messages.fetch(starboardMessage.id);
     await starMsg.edit({ embed:newEmbed });   
   } else {
-  // New message
+  // Yeni mesaj
     console.log("new message");
     let starCount = message.reactions.get(reaction.emoji.name).count;
     //if (message.reactions.get(reaction.emoji.name).users.has(message.author.id)) starCount--;
     
-    // Add to starboard if over minimum stars
     if (starCount >= config.minimumStars) {
       
-      // Create embed message
+      // Mesajı oluştur
       let newEmbed = new Discord.MessageEmbed()
         .setColor(config.defaultColour)
-        .setDescription(message.cleanContent)
         .setAuthor(message.author.tag, message.author.displayAvatarURL())
+            .addField(`Mesaj içeriği`, message.cleanContent)
         .addField('Orijinal mesaj', `[Mesaja Git](${message.url})`+ "**  **")
         .setTimestamp(new Date())
-        .setFooter(`⭐ ${starCount} | ${message.id} <#${message.channel}>`);
+        .setFooter(`🌟 ${starCount} | ${message.id}`);
       
       if (image)
         newEmbed.setImage(image);
@@ -131,10 +130,10 @@ function extension(attachment) {
     return attachment;
 }
 
-// Log in bot
+// Giriş
 client.login(process.env.TOKEN);
 
-// Save
+// Kaydet
 function save() {
   FS.writeFile("data.json", JSON.stringify(data));
 }

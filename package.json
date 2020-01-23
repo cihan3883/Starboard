@@ -1,5 +1,5 @@
 {
-  "//1": "describes your app and its dependencies",
+  "//1": "CodAre Starboard Bot",
   "//2": "https://docs.npmjs.com/files/package.json",
   "//3": "updating this file will download and update your packages",
   "name": "starboard-bot",
@@ -12,7 +12,7 @@
   "dependencies": {
     "discord.js": "github:discordjs/discord.js",
     "file-system": "^2.2.2",
-    "sqlite3": "^4.0.0"
+    "sqlite3": "^4.1.1"
   },
   "engines": {
     "node": "10.15.3"
